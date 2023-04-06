@@ -1,6 +1,6 @@
 const { Schema, model } = require('mongoose');
- const reactionSchema = require('./Reaction');
-
+const reactionSchema = require('./Reaction');
+const timeStamp = require('../utils/timeStamp');
 
 // Schema to create Student model
 const thoughtSchema = new Schema(
@@ -13,7 +13,9 @@ const thoughtSchema = new Schema(
     },
     createAt: {
       type: Date,
-      default: Date.now
+      default: Date.now,
+      get: timestamp => timeStamp(timestamp)
+      
     },
     userName: {
       type: String,
@@ -29,9 +31,9 @@ const thoughtSchema = new Schema(
   }
 );
 thoughtSchema.virtual('reactionCount').get(function () {
-  return this.friends.length;
+  return this.reactions.length;
 });
 
-const Thought = model('thought', thoughtSchema);
+const Thought = model('Thought', thoughtSchema);
 
 module.exports = Thought;
