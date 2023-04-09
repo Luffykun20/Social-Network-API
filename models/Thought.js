@@ -2,7 +2,7 @@ const { Schema, model } = require('mongoose');
 const reactionSchema = require('./Reaction');
 const timeStamp = require('../utils/timeStamp');
 
-// Schema to create Student model
+// Schema to create Thought model
 const thoughtSchema = new Schema(
   {
     thoughtText: {
@@ -14,13 +14,15 @@ const thoughtSchema = new Schema(
     createAt: {
       type: Date,
       default: Date.now,
-      get: timestamp => timeStamp(timestamp)
+      get: timestamp => timeStamp(timestamp) // getter method to format timestamp on query
       
     },
     userName: {
       type: String,
       required: true,
     },
+    
+    //Array of nested documents created with the reactionSchema
     reactions: [reactionSchema],
   },
   {
